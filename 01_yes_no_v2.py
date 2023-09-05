@@ -1,4 +1,4 @@
-# functions go here
+# functions
 def yes_no(question):
 
     while True:
@@ -6,18 +6,20 @@ def yes_no(question):
 
         if response == "yes" or response == "y":
             return "yes"
-
         elif response == "no" or response == "n":
             return "no"
-
         else:
-            print("Please enter yes or no")
+            print("please enter yes or no")
 
-# main routine goes here
+
+# main routine
 while True:
-    want_instructions = yes_no("Do you want to read the instructions? ")
+    want_instructions = yes_no("Do you want to see the instructions? ")
 
     if want_instructions == "yes":
         print("Instructions go here")
-
-    print("program continues...")
+        print("program continues...")
+        print()
+    elif want_instructions == "no":
+        print("program continues...")
+        print()
