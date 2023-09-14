@@ -45,6 +45,7 @@ def choose_pizza():
         else:
             print("Invalid pizza choice. Please enter a number between 1 and 5.")
 
+
 def choose_sizes(pizza_choice):
     pizza_name = all_pizzas[pizza_choice - 1]
     while True:
@@ -80,10 +81,9 @@ def choose_extras():
     return selected_extras
 
 total_order_cost = 0
-
+orders = []  # List to store orders
 
 while True:
-
     while True:
         # Get the selected pizza
         selected_pizza = choose_pizza()
@@ -109,40 +109,45 @@ while True:
         total_order_cost += total_cost
         print(f"The total cost for your order is ${total_cost:.2f}")
 
+        # Add order to the list of orders
+        orders.append({
+            "Pizza": pizza_name,
+            "Size": selected_size.split(':')[0],
+            "Extras": selected_extra_names,
+            "Total Cost": total_cost
+        })
+
         another_order = input("Would you like to order another pizza? (yes/no): ").lower()
         if another_order != "yes" and another_order != "y":
             break
 
-    # Print receipt
-    print("\nReceipt:")
-    print(f"Name: {name}")
-    print(f"Pizza: {pizza_name}")
-    print(f"Size: {selected_size.split(':')[0]}")
-    if selected_extra_names:
-        print("Selected extras:")
-        for i in range(len(selected_extra_names)):
-            print(f"{selected_extra_names[i]} - ${selected_extra_prices[i]:.2f}")
-    print(f"Total order cost: ${total_order_cost:.2f}")
+    # Print receipts for all orders
+    print("\nReceipts:")
+    for order in orders:
+        print("\nReceipt:")
+        print(f"Name: {name}")
+        print(f"Pizza: {order['Pizza']}")
+        print(f"Size: {order['Size']}")
+        if order['Extras']:
+            print("Selected extras:")
+            for extra in order['Extras']:
+                print(f"{extra}")
+        print(f"Total order cost: ${order['Total Cost']:.2f}")
 
     # Ask for confirmation
     confirmation = input("Would you like to confirm your order? (yes/no): ").lower()
     if confirmation == "yes" or confirmation == "y":
         print("Thank you for ordering", name)
-
         break
-
     else:
         print("Your order has not been confirmed.")
-
         # Ask if they want to make another order
         another_order = input("Would you like to make another order? (yes/no): ").lower()
         if another_order == "yes" or another_order == "y":
             # Reset the order details
             total_order_cost = 0
-
+            orders = []  # Reset the list of orders
             continue
-
         else:
             print("Thank you for considering our menu.")
-
             break
